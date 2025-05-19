@@ -4,6 +4,9 @@
 
 struct GlobalState {
     EventManager event_manager;
+
+    GlobalState();
+    ~GlobalState();
 };
 
 extern GlobalState G;

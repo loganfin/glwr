@@ -2,6 +2,9 @@
 
 #include "window.hpp"
 
+#include <vector>
+#include <memory>
+
 class Application {
 public:
     Application();
@@ -10,5 +13,5 @@ public:
 
 private:
     bool should_exit_ = false;
-    Window window_;
+    std::vector<std::unique_ptr<Window>> windows_;
 };
