@@ -1,6 +1,6 @@
 #pragma once
 
-#include "event_manager.hpp"
+#include "manager/event_manager.hpp"
 
 struct GlobalState {
     EventManager event_manager;

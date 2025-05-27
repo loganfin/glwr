@@ -30,16 +30,19 @@ public:
     // bool get_height() const;
 
 private:
+    void register_window_events();
+    void register_input_events();
+
     // TODO: Hide this to make GLFW a private dependency
     GLFWwindow* window_ = nullptr;
 };
 
 struct WindowClosedEvent : public Event {
-    Window const* window;
+    Window& window;
 };
 
 struct WindowResizedEvent : public Event {
-    Window const* window;
+    Window& window;
     int new_width;
     int new_height;
 };

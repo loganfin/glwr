@@ -24,11 +24,10 @@ Window::Window(std::string const& title, uint32_t width, uint32_t height)
         throw std::runtime_error("Failed to create GLFW window!");
     }
 
-    // Set callbacks
-    glfwSetWindowCloseCallback(window_, on_glfw_window_closed);
-    glfwSetWindowSizeCallback(window_, on_glfw_window_resized);
-
     glfwSetWindowUserPointer(window_, this);
+
+    register_window_events();
+    register_input_events();
 }
 
 Window::~Window()
@@ -48,6 +47,16 @@ std::string Window::get_title() const
     return {glfwGetWindowTitle(window_)};
 }
 
+void Window::register_window_events()
+{
+    glfwSetWindowCloseCallback(window_, on_glfw_window_closed);
+    glfwSetWindowSizeCallback(window_, on_glfw_window_resized);
+}
+
+void Window::register_input_events()
+{
+}
+
 namespace {
 
 Window* get_window(GLFWwindow* glfw_window);
@@ -55,7 +64,7 @@ Window* get_window(GLFWwindow* glfw_window);
 void on_glfw_window_closed(GLFWwindow* glfw_window)
 {
     std::cout << "Publishing WindowClosedEvent...\n";
-    auto* window = get_window(glfw_window);
+    auto& window = *get_window(glfw_window);
     G.event_manager.publish<WindowClosedEvent>(window);
 }
 
@@ -66,7 +75,7 @@ void on_glfw_window_resized(
 )
 {
     std::cout << "Publishing WindowResizedEvent...\n";
-    auto* window = get_window(glfw_window);
+    auto& window = *get_window(glfw_window);
     G.event_manager.publish<WindowResizedEvent>(window, new_width, new_height);
 }
 
